@@ -7,21 +7,21 @@
 The goal of this PA is to use several IPC methods to enable client-server communication and compare their performance under large volume of data exchange.
 
 Your PA1 used FIFORequestChannel class, which was pre-written and given to you. FIFORequestChannel class uses a mechanism called “named pipes” or “FIFOs” to communicate between the two sides of the channel. However, FIFOs are only one of several different IPC mechanisms, each of which have their own particular uses that make them suited to particular applications. In this programming assignment, we are going to expand our toolbox by learning about 2 “new” IPC mechanisms in addition to named pipes: _message queues_ and _shared memory_, where the latter would in turn use _Kernel Semaphores_.
-<br>
+<br><br>
 
 **Background**
 
 *Message Queues*
 
 While pipes provide a byte stream between two processes, message queues allow for the exchange of messages between processes. There are library functions (POSIX library, not STL) for message queue opening/creation, sending messages, receiving messages, closing the message queue, deleting the message queue, and modifying the message queue’s attributes. You may be able to use default attributes for this assignment, but those defaults vary by system. Visit the man pages for mq_overview (note that this is POSIX IPC, not the System V IPC, which is the older way) for how to check and set default message queue attributes.
-<br>
+<br><br>
 
 **Shared Memory**
 
 Up until now there have been IPC mechanisms to provide byte streams and message passing. But what if something a little more versatile is needed? Shared memory is exactly what it sounds like: a segment of memory that can be read and modified (depending on its configuration) by multiple different processes. You will notice that there are no system calls for reading and writing the shared memory segment. This is because a shared memory segment is semantically identical to any other memory segment, such as can be obtained from malloc/new, except for the IPC and synchronization considerations. One can read and modify it using memset, strcpy, memcpy, or just about any other memory-reading/writing operations. This brings in synchronization concerns between the writer and reader, which we will have to solve ourselves using Kernel Semaphores.
 
 Visit the man pages for shm_overview. Again, note that you are required to use POSIX shared memory, not the System V version.
-<br>
+<br><br>
 
 **Kernel Semaphores**
 
@@ -74,7 +74,7 @@ the number of characters written, or -1 when it fails */
 ```
 
 You must resolve the derived type of RequestChannel class in the runtime using polymorphism and run-time binding in C++. For instance, you cannot recompile your code if you want to switch from FIFO to SHM.
-<br>
+<br><br>
 
 **Compiling and Running Your Code**
 
@@ -97,7 +97,7 @@ And, the following command will get the specified file using the given number of
 	-i <f|q|s> -m <buffer capacity>
 
 Note that for the above command, with number of channels `-c` and the file size `-s`, collect the first [`s`/`c`] bytes through the first channel, the next [`s`/`c`] bytes from the second channel and so forth; and each time using the given buffer size.
-<br>
+<br><br>
 
 **Clean Up**
 
@@ -113,10 +113,12 @@ You must clean up all IPC objects from the kernel memory and all temporary files
 - Repeat the previous with file transfers and again comare performance.
 
 - Include the link to a video where you demonsrtate your work according the grading instructions to be published soon.
+<br><br>
 
 **Bonus - 5 points**
 
 - Using only one shared memory segment for all request channels (i.e., the main control channel and all the other new ones.
+<br><br>
 
 **What to Turn In**
 
