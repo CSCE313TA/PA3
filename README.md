@@ -16,14 +16,14 @@ Your PA1 used FIFORequestChannel class, which was pre-written and given to you. 
 While pipes provide a byte stream between two processes, message queues allow for the exchange of messages between processes. There are library functions (POSIX library, not STL) for message queue opening/creation, sending messages, receiving messages, closing the message queue, deleting the message queue, and modifying the message queue’s attributes. You may be able to use default attributes for this assignment, but those defaults vary by system. Visit the man pages for mq_overview (note that this is POSIX IPC, not the System V IPC, which is the older way) for how to check and set default message queue attributes.
 <br><br>
 
-**Shared Memory**
+*Shared Memory*
 
 Up until now there have been IPC mechanisms to provide byte streams and message passing. But what if something a little more versatile is needed? Shared memory is exactly what it sounds like: a segment of memory that can be read and modified (depending on its configuration) by multiple different processes. You will notice that there are no system calls for reading and writing the shared memory segment. This is because a shared memory segment is semantically identical to any other memory segment, such as can be obtained from malloc/new, except for the IPC and synchronization considerations. One can read and modify it using memset, strcpy, memcpy, or just about any other memory-reading/writing operations. This brings in synchronization concerns between the writer and reader, which we will have to solve ourselves using Kernel Semaphores.
 
 Visit the man pages for shm_overview. Again, note that you are required to use POSIX shared memory, not the System V version.
 <br><br>
 
-**Kernel Semaphores**
+*Kernel Semaphores*
 
 So far, we have used only parent-child synchronization using `wait()`/`waitpid()` functions where the parent can only wait for only the termination of the child or some other-other change of its state (e.g., stopped/continued). While this works for some applications, in other cases, you need more sophisticated form of synchronization, where:
 
@@ -76,7 +76,7 @@ the number of characters written, or -1 when it fails */
 You must resolve the derived type of RequestChannel class in the runtime using polymorphism and run-time binding in C++. For instance, you cannot recompile your code if you want to switch from FIFO to SHM.
 <br><br>
 
-**Compiling and Running Your Code**
+*Compiling and Running Your Code*
 
 Modify the makefile to include compile commands for FIFO, MQ and SHM Request Channels. Make the client.cpp take an additional runtime argument option `-i` whose value would be one of the following:
 
@@ -99,7 +99,7 @@ And, the following command will get the specified file using the given number of
 Note that for the above command, with number of channels `-c` and the file size `-s`, collect the first [`s`/`c`] bytes through the first channel, the next [`s`/`c`] bytes from the second channel and so forth; and each time using the given buffer size.
 <br><br>
 
-**Clean Up**
+*Clean Up*
 
 You must clean up all IPC objects from the kernel memory and all temporary files you created. For FIFO, check the current directory, and for MQ and SHM, check the /dev/mqueue and /dev/shm directories, respectively, to make sure that your clean up has worked correctly. In addition, you should clean all heap-allocated objects.
 <br>
